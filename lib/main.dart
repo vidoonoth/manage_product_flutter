@@ -1,28 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/product_screen.dart';
-import 'providers/product_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'providers/user_provider.dart';
+import 'providers/product_provider.dart';
+import 'providers/note_provider.dart';
+import 'screens/login_screen.dart';
+import 'screens/home_page_screen.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('auth_token');
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => NoteProvider()),
+      ],
+      child: MyApp(initialToken: token),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? initialToken;
+
+  const MyApp({super.key, this.initialToken});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProductProvider()..fetchProducts(),
-      child: MaterialApp(
-        title: 'Manajemen Produk',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-          useMaterial3: true,
-        ),
-        home: const ProductScreen(),
-      ),
+    // final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    return MaterialApp(
+      title: 'Manajemen Produk',
+      debugShowCheckedModeBanner: false,
+      home: initialToken != null ? const HomeScreen() : const LoginScreen(),
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(),
+      },
     );
   }
 }

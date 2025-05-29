@@ -12,7 +12,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((item) => Product.fromJson(item)).toList();
-    } else {
+    } else {      
       throw Exception('Gagal memuat data produk');
     }
   }
@@ -25,11 +25,7 @@ class ApiService {
     final response = await http.post(
       Uri.parse('${Config.baseUrl}/create.php'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'nama': nama,
-        'deskripsi': deskripsi,
-        'harga': harga, 
-      }),
+      body: jsonEncode({'nama': nama, 'deskripsi': deskripsi, 'harga': harga}),
     );
 
     if (response.statusCode == 200) {

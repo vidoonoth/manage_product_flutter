@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "226443976965",
+    "project_id": "managementproduct-6603d",
+    "storage_bucket": "managementproduct-6603d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226443976965:android:02b977d88a9d36af45576c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_tubes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226443976965-28dnpbfendn4tnb6e9peq1e8qoedngge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_tubes",
+            "certificate_hash": "e0b1ed8c72e26deb931984b347bb88093eab7c3d"
+          }
+        },
+        {
+          "client_id": "226443976965-ai99v92lcdadgslgue73qo30iipr9vv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9M1YDFWffTbw0-CDYLHWGHL1a4uhTKOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226443976965-ai99v92lcdadgslgue73qo30iipr9vv5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

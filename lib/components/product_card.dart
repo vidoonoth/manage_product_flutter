@@ -10,36 +10,40 @@ class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
 
   Future<void> _showDeleteDialog(BuildContext context) async {
-    final productProvider = Provider.of<ProductProvider>(context, listen: false);
-    
+    final productProvider = Provider.of<ProductProvider>(
+      context,
+      listen: false,
+    );
+
     final confirm = await showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Konfirmasi'),
-        content: const Text('Hapus produk ini?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Batal'),
+      builder:
+          (_) => AlertDialog(
+            title: const Text('Konfirmasi'),
+            content: const Text('Hapus produk ini?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Batal'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
     );
-    
+
     if (confirm == true && context.mounted) {
       final result = await productProvider.deleteProduct(product.id);
-            
+
       if (!context.mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(result 
-              ? 'Produk berhasil dihapus'
-              : 'Gagal menghapus produk'),
+          content: Text(
+            result ? 'Produk berhasil dihapus' : 'Gagal menghapus produk',
+          ),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -54,9 +58,7 @@ class ProductCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () {
@@ -76,7 +78,7 @@ class ProductCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple,
+                        color: Colors.blue, // Ubah dari deepPurple ke blue
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -84,16 +86,20 @@ class ProductCard extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 4),
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple.withOpacity(0.1),
+                      color: Colors.blue.withOpacity(
+                        0.1,
+                      ), // Ubah dari deepPurple ke blue
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       'Rp ${product.harga}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple,
+                        color: Colors.blue, // Ubah dari deepPurple ke blue
                       ),
                     ),
                   ),
@@ -102,10 +108,7 @@ class ProductCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 product.deskripsi,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 14,
-                ),
+                style: TextStyle(color: Colors.grey[600], fontSize: 14),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

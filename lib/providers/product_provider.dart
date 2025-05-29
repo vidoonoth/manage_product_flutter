@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../services/api_service.dart';
+import '../services/product_prefs.dart';
 import '../config/logger.dart';
 
 class ProductProvider with ChangeNotifier {
@@ -10,12 +11,17 @@ class ProductProvider with ChangeNotifier {
   List<Product> get products => _products;
   bool get isLoading => _isLoading;
 
-  Future<void> fetchProducts() async {
+  Future<void> fetchProducts({bool fromCache = false}) async {
     try {
       _isLoading = true;
       notifyListeners();
 
-      _products = await ApiService.getProduct();
+      if (fromCache) {
+        _products = await ProductPrefs.loadProducts();
+      } else {
+        _products = await ApiService.getProduct();
+        await ProductPrefs.saveProducts(_products);
+      }
     } catch (e) {
       logger.e('Error: $e');
     } finally {
@@ -30,7 +36,9 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
 
       final result = await ApiService.addProduct(nama, deskripsi, harga);
-      if (result) await fetchProducts();
+      if (result) {
+        await fetchProducts();
+      }
       return result;
     } catch (e) {
       logger.e('Error adding product: $e');
@@ -41,13 +49,20 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> updateProduct(String id, String nama, String deskripsi, int harga) async {
+  Future<bool> updateProduct(
+    String id,
+    String nama,
+    String deskripsi,
+    int harga,
+  ) async {
     try {
       _isLoading = true;
       notifyListeners();
 
       final result = await ApiService.editProduct(id, nama, deskripsi, harga);
-      if (result) await fetchProducts();
+      if (result) {
+        await fetchProducts();
+      }
       return result;
     } catch (e) {
       logger.e('Error updating product: $e');
@@ -64,7 +79,9 @@ class ProductProvider with ChangeNotifier {
       notifyListeners();
 
       final result = await ApiService.deleteProduct(id);
-      if (result) await fetchProducts();
+      if (result) {
+        await fetchProducts();
+      }
       return result;
     } catch (e) {
       logger.e('Error deleting product: $e');
