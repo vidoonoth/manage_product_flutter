@@ -38,7 +38,7 @@ class _ProductScreenState extends State<ProductScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.blue.shade50, // Ubah dari deepPurple ke blue
+              Colors.blue.shade50, 
               Colors.blue.shade100,
             ],
           ),

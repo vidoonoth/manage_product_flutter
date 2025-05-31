@@ -89,7 +89,7 @@ class _NoteScreenState extends State<NoteScreen> {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withAlpha(229),
               child: Row(
                 children: [
                   Expanded(

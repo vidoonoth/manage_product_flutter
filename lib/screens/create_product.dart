@@ -47,22 +47,30 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
               productProvider.isLoading
                   ? const CircularProgressIndicator()
                   : ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final nama = _namaController.text;
-                          final deskripsi = _deskripsiController.text;
-                          final harga = int.tryParse(_hargaController.text) ?? 0;
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final nama = _namaController.text;
+                        final deskripsi = _deskripsiController.text;
+                        final harga = int.tryParse(_hargaController.text) ?? 0;
 
-                          final result = await productProvider.addProduct(
-                              nama, deskripsi, harga);
+                        final result = await productProvider.addProduct(
+                          nama,
+                          deskripsi,
+                          harga,
+                        );
 
-                          if (result) {
-                            Navigator.pop(context);
-                          }
+                        if (!context.mounted) {
+                          return;
+                        } 
+
+                        if (result) {
+                          Navigator.pop(context);
                         }
-                      },
-                      child: const Text('Simpan'),
-                    ),
+                      }
+                    },
+
+                    child: const Text('Simpan'),
+                  ),
             ],
           ),
         ),

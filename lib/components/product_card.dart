@@ -78,7 +78,7 @@ class ProductCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue, // Ubah dari deepPurple ke blue
+                        color: Colors.blue,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -90,16 +90,14 @@ class ProductCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(
-                        0.1,
-                      ), // Ubah dari deepPurple ke blue
+                      color: Colors.blue.withAlpha((0.1 * 255).toInt()),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       'Rp ${product.harga}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue, // Ubah dari deepPurple ke blue
+                        color: Colors.blue, 
                       ),
                     ),
                   ),
@@ -150,7 +148,7 @@ class ProductCard extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withAlpha((0.2 * 255).toInt()),
         shape: BoxShape.circle,
       ),
       child: IconButton(

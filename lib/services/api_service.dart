@@ -5,6 +5,7 @@ import '../config/config.dart';
 import '../config/logger.dart';
 
 class ApiService {
+  
   static Future<List<Product>> getProduct() async {
     final response = await http.get(Uri.parse('${Config.baseUrl}/read.php'));
     logger.i('Attempting to call API at: $response');

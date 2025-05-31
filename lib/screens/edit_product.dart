@@ -63,7 +63,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     await productProvider.updateProduct(id, nama, deskripsi, harga);
 
     if (!mounted) return;
-    Navigator.of(context).pop(true); // kembali dengan hasil true
+    Navigator.of(context).pop(true); 
   }
 
   @override

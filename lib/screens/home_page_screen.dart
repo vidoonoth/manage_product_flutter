@@ -26,14 +26,23 @@ class HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_currentIndex], style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255))),
-        backgroundColor: Colors.blue[400], // Ubah warna AppBar
+        title: Text(
+          _titles[_currentIndex],
+          style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
+        ),
+        backgroundColor: Colors.blue[400],
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout, color: Color.fromARGB(255, 255, 255, 255)),
+            icon: const Icon(
+              Icons.logout,
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
             onPressed: () async {
               await userProvider.signOut();
               await ProductPrefs.clearProducts();
+
+              if (!context.mounted) return;
+
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -45,7 +54,7 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue[400], // Ubah warna BottomNavigationBar
+        backgroundColor: Colors.blue[400],
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
         currentIndex: _currentIndex,
